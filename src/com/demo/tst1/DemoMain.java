@@ -62,6 +62,8 @@ public class DemoMain extends C implements A,B{
 		
 		System.out.println("Hello GitHub");
 		
+		System.out.println("ABC123");
+		
 	}
 
 }
