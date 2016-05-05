@@ -56,7 +56,7 @@ public class DemoMain extends C implements A,B{
 		
 		strColl.stream()
 		.map(String::toUpperCase)
-		.filter((s)->s.startsWith("A"))
+		//.filter((s)->s.startsWith("A"))
 		//.reduce((s1,s2)->s1 +"#"+s2)
 		.forEach(System.out::println);
 		
