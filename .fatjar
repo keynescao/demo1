@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Wed Apr 20 15:56:41 CST 2016
+onejar.license.required=false
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=true
+jarname=D\:\\\u6211\u7684\u6587\u6863\\\u684C\u9762\\client.jar
+manifest.mergeall=true
+manifest.mainclass=com.demo.mq1.Consumer
+manifest.file=<createnew>
+jarname.isextern=true
+onejar.expand=
+excludes=<po|demotest>~com/~demo/~mq1/~Publisher.class
+includes=
