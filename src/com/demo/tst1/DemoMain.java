@@ -60,6 +60,7 @@ public class DemoMain extends C implements A,B{
 		//.reduce((s1,s2)->s1 +"#"+s2)
 		.forEach(System.out::println);
 		
+		System.out.println("Hello GitHub");
 		
 	}
 
