@@ -1,23 +1,29 @@
-package com.demo.netty.server.handler;
+package com.demo.netty.client.handler;
+
+import java.util.Date;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.util.ReferenceCountUtil;
 
-/**
- * @author keynes
- * server handler 
- */
-public class DiscardServerHandler extends ChannelHandlerAdapter {
+public class TimeClientHandler extends ChannelHandlerAdapter {
 
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 		
-		ctx.write(msg);
-		ctx.flush();
-		//System.out.println(msg);
-		//ctx.writeAndFlush(msg);
+		ByteBuf m = (ByteBuf)msg;
+		try{
+			
+			long currentMills = (m.readUnsignedInt() - 2208988800L) * 1000L;
+			System.out.println(new Date(currentMills));
+			ctx.close();
+			
+			
+		}finally{
+			m.release();
+		}
+		
+		
 	}
 
 	@Override
@@ -26,4 +32,7 @@ public class DiscardServerHandler extends ChannelHandlerAdapter {
 		ctx.close();
 	}
 
+	
+	
+	
 }
