@@ -1,5 +1,7 @@
 package com.demo.netty.server.handler;
 
+import com.demo.netty.pojo.UnixTime;
+
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -11,9 +13,11 @@ public class TimeServerHandler extends ChannelHandlerAdapter {
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
 		
-		//建立连接准备通信时发生
+		/*//建立连接准备通信时发生
 		final ByteBuf time = ctx.alloc().buffer(4);
-		time.writeInt((int)(System.currentTimeMillis()/1000L + 2208988800L));
+		int msg = (int)(System.currentTimeMillis()/1000L + 2208988800L);
+		System.out.println("Msg: " + msg);
+		time.writeInt(msg);
 		
 		final ChannelFuture f = ctx.writeAndFlush(time);//future 模式异步处理消息发送
 		//注册匿名类监听事件完成后关闭连接
@@ -25,9 +29,12 @@ public class TimeServerHandler extends ChannelHandlerAdapter {
 				ctx.close();
 			}
 			
-		});
+		});*/
 		
-		
+		UnixTime t = new UnixTime();
+		System.out.println("===" + t);
+		ChannelFuture f = ctx.writeAndFlush(t);
+		f.addListener(ChannelFutureListener.CLOSE);
 		
 		
 	}

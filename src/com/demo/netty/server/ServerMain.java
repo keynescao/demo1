@@ -1,6 +1,6 @@
 package com.demo.netty.server;
 
-import com.demo.netty.server.handler.DiscardServerHandler;
+import com.demo.netty.server.handler.TimeEncodeExt;
 import com.demo.netty.server.handler.TimeServerHandler;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -37,7 +37,7 @@ public class ServerMain {
 				protected void initChannel(SocketChannel ch) throws Exception {
 					
 					//指定处理程序
-					ch.pipeline().addLast(new TimeServerHandler());
+					ch.pipeline().addLast(new TimeEncodeExt(),new TimeServerHandler());
 					
 				}
 				

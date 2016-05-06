@@ -64,6 +64,12 @@ public class DemoMain extends C implements A,B{
 		
 		System.out.println("ABC123");
 		
+		int msg = (int)(System.currentTimeMillis()/1000L + 2208988800L);
+		System.out.println(System.currentTimeMillis()/1000L);
+		System.out.println(1462520809 + 2208988800L );
+		System.out.println(Integer.MAX_VALUE);
+		System.out.println(msg);
+		
 	}
 
 }
