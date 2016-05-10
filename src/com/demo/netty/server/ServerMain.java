@@ -1,9 +1,14 @@
 package com.demo.netty.server;
 
+import java.util.Random;
+
 import com.demo.netty.server.handler.TimeEncodeExt;
 import com.demo.netty.server.handler.TimeServerHandler;
 
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelOption;
@@ -60,9 +65,16 @@ public class ServerMain {
 	public static void main(String[] args)throws Exception {
 		
 		
-		new ServerMain(8080).run();
+		//new ServerMain(8080).run();
+		Random rand = new Random();
+		ByteBuf buf = Unpooled.buffer(16);
+		while(buf.isWritable()){
+			buf.writeInt(rand.nextInt());
+		}
 		
+		System.out.println(ByteBufUtil.hexDump(buf));
 		
+		Unpooled.wrappedBuffer(buf.array());
 		
 	}
 
