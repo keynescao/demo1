@@ -1,5 +1,7 @@
 package com.demo.tst1;
 
+import java.io.File;
+import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -23,7 +25,7 @@ public class DemoMain extends C implements A,B{
 	}
 
 	public static void main(String[] args) {
-		A a = new DemoMain();
+		/*A a = new DemoMain();
 		B b = new DemoMain();
 		C c = new DemoMain();
 		
@@ -69,10 +71,50 @@ public class DemoMain extends C implements A,B{
 		System.out.println(1462520809 + 2208988800L );
 		System.out.println(Integer.MAX_VALUE);
 		System.out.println(msg);
+		*/
 		
+		/*DemoMain a = new DemoMain();
+		a.getMusicList("E:\\other");
+		for(String s : a.musicList){
+			System.out.println(s);
+		}*/
+	}
+	
+	public List<String> musicList = new ArrayList<String>();
+	
+	public void getMusicList(String path){
+
+		File file = new File(path);
+		if(file.isDirectory()){
+			File []list = file.listFiles(new FileFilter() {
+				
+				@Override
+				public boolean accept(File pathname) {
+					if(pathname.isDirectory()){
+						return true;
+					}else{
+						String fileName = pathname.getName().toLowerCase();
+						if(fileName.endsWith(".mp3")){
+							return true;
+						}
+						return false;
+					}
+				}
+			});
+			for(File f : list){
+				getMusicList(f.getAbsolutePath());
+			}
+		}else{
+			musicList.add(file.getName());
+		}
+
 	}
 
 }
+
+
+
+
 
 interface Convert<F,T>{
 	
