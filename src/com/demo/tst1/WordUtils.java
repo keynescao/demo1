@@ -1,47 +1,16 @@
 package com.demo.tst1;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.converter.PicturesManager;
-import org.apache.poi.hwpf.converter.WordToHtmlConverter;
-import org.apache.poi.hwpf.usermodel.Picture;
-import org.apache.poi.hwpf.usermodel.PictureType;
-import org.apache.poi.xwpf.converter.core.FileImageExtractor;
-import org.apache.poi.xwpf.converter.core.FileURIResolver;
-import org.apache.poi.xwpf.converter.xhtml.XHTMLConverter;
-import org.apache.poi.xwpf.converter.xhtml.XHTMLOptions;
-import org.apache.poi.xwpf.usermodel.XWPFDocument;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.xhtmlrenderer.pdf.ITextFontResolver;
-import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import com.artofsolving.jodconverter.DocumentConverter;
 import com.artofsolving.jodconverter.openoffice.connection.OpenOfficeConnection;
 import com.artofsolving.jodconverter.openoffice.connection.SocketOpenOfficeConnection;
 import com.artofsolving.jodconverter.openoffice.converter.OpenOfficeDocumentConverter;
-import com.lowagie.text.pdf.BaseFont;
 
 public class WordUtils {
 	
 	
-	public static void writeFile(String content,String path){
+	/*public static void writeFile(String content,String path){
 		
 		FileOutputStream fos = null;
 		BufferedWriter bw = null;
@@ -149,7 +118,7 @@ public class WordUtils {
 		renderer.createPDF(os);
 		os.flush();
 		os.close();		
-	}
+	}*/
 	
 	public static void convertWord2PDF(String input, String output)throws Exception	{ 
         File inputFile = new File(input); 
@@ -172,6 +141,31 @@ public class WordUtils {
         } 
     } 
 	
+	public static void convertWord2PDFLinux(String input, String output)throws Exception	{ 
+        File inputFile = new File(input); 
+        if(!inputFile.exists()){
+        	System.out.println("File " + input + " not exist");
+        	return;
+        }
+        File outputFile = new File(output); 
+        
+        String command = "/opt/openoffice4/"   
+                + "program/soffice -headless -accept=\"socket,host=127.0.0.1,port=8100;urp;\"";   
+        Process pro  = Runtime.getRuntime().exec(command);        
+        
+        OpenOfficeConnection connection = new SocketOpenOfficeConnection(8100); 
+        try { 
+            connection.connect(); 
+            DocumentConverter converter = new OpenOfficeDocumentConverter(connection); 
+            converter.convert(inputFile, outputFile); 
+        } catch(Exception e) { 
+            e.printStackTrace(); 
+        } finally { 
+            try{ if(connection != null){connection.disconnect(); connection = null;}}catch(Exception e){} 
+            pro.destroy();
+        } 
+    } 
+	
 	
 	
 	
@@ -179,9 +173,9 @@ public class WordUtils {
 	
 	public static void main(String[] args)throws Exception {
 	
-		String sourPath = "D:/关于2016年举行员工拓展活动的通知.docx";
+		String sourPath = "/root/关于2016年举行员工拓展活动的通知.docx";
 		//String sourPath = "D:/Java面试的常见问题.doc";
-		String outPath = "d:/test/test.htm";
+		//String outPath = "d:/test/test.htm";
 		
 		//WordUtils.convertWordDoc2Html(sourPath, outPath);
 		
@@ -191,6 +185,8 @@ public class WordUtils {
 		//convertHtml2PDF(outPath,"d:/test/test.pdf");
 		
 		convertWord2PDF(sourPath,"d:/test/test.pdf");
+		
+		//convertWord2PDFLinux(sourPath,"/root/test.pdf");
 	}
 	
 	
